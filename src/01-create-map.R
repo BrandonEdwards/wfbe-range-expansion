@@ -37,7 +37,7 @@ wfbe_ebird_nox <- wfbe_ebird[which(wfbe_ebird$abund != "X"), ]
 wfbe_ebird_x <- wfbe_ebird[which(wfbe_ebird$abund == "X"), ]
 
 wfbe_full <- ggplot(data = za_range) +
-  geom_sf(fill = "red") +
+  geom_sf(fill = "darkgreen") +
   geom_sf(data = za, fill = NA) +
   coord_sf(xlim = c(15, 35), ylim = c(-20, -37), expand = FALSE) +
   geom_point(data = wfbe_ebird_nox, aes(x = lon, y = lat),
@@ -47,11 +47,12 @@ wfbe_full <- ggplot(data = za_range) +
              size = 2, shape = 4) +
   geom_rect(aes(xmin = 17, xmax = 24, ymin = -35, ymax = -31), color = "black", fill = NA) +
   geom_rect(aes(xmin = 24, xmax = 31, ymin = -35, ymax = -31), color = "black", fill = NA) +
-
+  xlab("Longitude") +
+  ylab("Latitude") +
   NULL
 
 wfbe_wc <- ggplot(data = za_range) +
-  geom_sf(fill = "red") +
+  geom_sf(fill = "darkgreen") +
   geom_sf(data = za, fill = NA) +
   coord_sf(xlim = c(17, 24), ylim = c(-31, -35), expand = FALSE) +
   geom_point(data = wfbe_ebird_nox, aes(x = lon, y = lat),
@@ -59,10 +60,12 @@ wfbe_wc <- ggplot(data = za_range) +
              color = "red", alpha = 0.7) +
   geom_point(data = wfbe_ebird_x, aes(x = lon, y = lat),
              size = 4, shape = 4) +
+  xlab("Longitude") +
+  ylab("Latitude") +
   NULL
 
 wfbe_ec <- ggplot(data = za_range) +
-  geom_sf(fill = "red") +
+  geom_sf(fill = "darkgreen") +
   geom_sf(data = za, fill = NA) +
   coord_sf(xlim = c(24, 31), ylim = c(-31, -35), expand = FALSE) +
   geom_point(data = wfbe_ebird_nox, aes(x = lon, y = lat),
@@ -70,6 +73,8 @@ wfbe_ec <- ggplot(data = za_range) +
              color = "red", alpha = 0.7) +
   geom_point(data = wfbe_ebird_x, aes(x = lon, y = lat),
              size = 4, shape = 4) +
+  xlab("Longitude") +
+  ylab("Latitude") +
   NULL
 
 blank <- ggplot() + theme_void()
@@ -92,7 +97,7 @@ dev.off()
 
 png(filename = "output/combined.png",
     width = 12, height = 12, units = "in", res = 300)
-ggarrange(ggarrange(blank, wfbe_full, blank, ncol = 3, widths = c(1,2.5,1)),
-          ggarrange(wfbe_wc, blank, wfbe_ec, ncol = 3, widths = c(2.5,1,2.5)),
+ggarrange(ggarrange(blank, wfbe_full, blank, ncol = 3, widths = c(1,2.5,1), labels = c("", "A", "")),
+          ggarrange(wfbe_wc, blank, wfbe_ec, ncol = 3, widths = c(2.5,1,2.5), labels = c("B", "", "C")),
           nrow = 2)
 dev.off()
